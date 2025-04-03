@@ -1,0 +1,368 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<div class="main-container">
+	<!-- Left sidebar - 30% width with darker blue -->
+	<div class="sidebar">
+		<div class="profile-section">
+			<div class="profile-dropdown">
+				<button class="profile-button" id="profileBtn">
+					<div class="profile-icon">
+						<img src="{% static 'user/images/profil.png' %}" alt="Profile" />
+					</div>
+					<span>Mifos AI</span>
+				</button>
+				<div id="profileDropdown" class="dropdown-content">
+					<a href="{% url 'logout' %}">Logout</a>
+				</div>
+			</div>
+		</div>
+		<!-- Additional sidebar content would go here -->
+	</div>
+
+	<!-- Right content area - 70% width with lighter blue -->
+	<div class="content-area">
+		<div class="mic-container">
+			<div class="mic-circle" onclick="openMicModal()">
+				<img
+					src="{% static 'user/images/mic.png' %}"
+					alt="Microphone"
+					class="mic-icon"
+				/>
+			</div>
+			<div class="instructions">
+				<p class="primary-instruction">Click the mic to start conversation</p>
+				<p class="secondary-instruction">
+					OR Say <span class="highlight">"Hey John"</span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Full-screen microphone modal overlay -->
+<div id="mic-modal" class="mic-modal">
+	<div class="mic-modal-content">
+		<div class="ripple-container">
+			<div class="ripple-circle ripple-1"></div>
+			<div class="ripple-circle ripple-2"></div>
+			<div class="ripple-circle ripple-3"></div>
+			<div class="ripple-circle ripple-center"></div>
+		</div>
+		<div class="control-buttons">
+			<button class="control-button mic-button">
+				<svg
+					width="24"
+					height="36"
+					viewBox="0 0 24 36"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M12 24C15.3137 24 18 21.3137 18 18V8C18 4.68629 15.3137 2 12 2C8.68629 2 6 4.68629 6 8V18C6 21.3137 8.68629 24 12 24Z"
+						stroke="white"
+						stroke-width="2"
+					/>
+					<path
+						d="M2 14V18C2 23.5228 6.47715 28 12 28C17.5228 28 22 23.5228 22 18V14"
+						stroke="white"
+						stroke-width="2"
+					/>
+					<path d="M12 28V34" stroke="white" stroke-width="2" />
+				</svg>
+			</button>
+			<button class="control-button close-button" onclick="closeMicModal()">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M18 6L6 18M6 6L18 18"
+						stroke="white"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+		</div>
+	</div>
+</div>
+
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: Arial, sans-serif;
+		height: 100vh;
+	}
+
+	.main-container {
+		display: flex;
+		height: 100vh;
+	}
+
+	/* Left sidebar styling */
+	.sidebar {
+		width: 30%;
+		background-color: #2c4269;
+		color: white;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	.profile-section {
+		padding: 20px;
+	}
+
+	.profile-dropdown {
+		position: relative;
+	}
+
+	.profile-button {
+		display: flex;
+		align-items: center;
+		background: none;
+		border: none;
+		color: white;
+		cursor: pointer;
+		padding: 0;
+		font-size: 16px;
+	}
+
+	.profile-icon {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #1a2a45;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 15px;
+	}
+
+	.profile-icon img {
+		width: 24px;
+		height: 24px;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #1a2a45;
+		min-width: 120px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		z-index: 1;
+		border-radius: 4px;
+		margin-top: 10px;
+	}
+
+	.dropdown-content a {
+		color: white;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+	}
+
+	.dropdown-content a:hover {
+		background-color: #253654;
+	}
+
+	.show {
+		display: block;
+	}
+
+	/* Right content area styling */
+	.content-area {
+		width: 70%;
+		background-color: #111f38;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.mic-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.mic-circle {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.2);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 30px;
+		cursor: pointer;
+	}
+
+	.mic-icon {
+		width: 60px;
+		height: 60px;
+		opacity: 0.8;
+	}
+
+	.instructions {
+		text-align: center;
+		color: white;
+	}
+
+	.primary-instruction {
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+
+	.secondary-instruction {
+		font-size: 18px;
+		margin-top: 0;
+	}
+
+	.highlight {
+		color: #ff6347;
+	}
+
+	/* Mic Modal Overlay */
+	.mic-modal {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		background-color: #111f38;
+	}
+
+	.mic-modal-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+	}
+
+	.ripple-container {
+		position: relative;
+		width: 280px;
+		height: 280px;
+		margin-bottom: 80px;
+	}
+
+	.ripple-circle {
+		position: absolute;
+		border-radius: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.ripple-center {
+		width: 80px;
+		height: 80px;
+		background-color: #8a4fff;
+		z-index: 10;
+	}
+
+	.ripple-1,
+	.ripple-2,
+	.ripple-3 {
+		background-color: #3a2a7a;
+		opacity: 0.7;
+		animation: ripple 2s infinite ease-out;
+	}
+
+	.ripple-1 {
+		width: 180px;
+		height: 180px;
+		animation-delay: 0s;
+	}
+
+	.ripple-2 {
+		width: 220px;
+		height: 220px;
+		animation-delay: 0.5s;
+	}
+
+	.ripple-3 {
+		width: 260px;
+		height: 260px;
+		animation-delay: 1s;
+	}
+
+	@keyframes ripple {
+		0% {
+			transform: translate(-50%, -50%) scale(0.8);
+			opacity: 0.7;
+		}
+		100% {
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 0;
+		}
+	}
+
+	.control-buttons {
+		display: flex;
+		justify-content: center;
+		gap: 40px;
+	}
+
+	.control-button {
+		width: 70px;
+		height: 70px;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.2);
+		border: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.control-button svg {
+		width: 28px;
+		height: 28px;
+	}
+</style>
+
+<script>
+	// Wait for the DOM to be fully loaded
+	document.addEventListener("DOMContentLoaded", function () {
+		// Get the profile button and dropdown
+		const profileBtn = document.getElementById("profileBtn");
+		const profileDropdown = document.getElementById("profileDropdown");
+
+		// Add click event listener to profile button
+		profileBtn.addEventListener("click", function (event) {
+			event.stopPropagation(); // Prevent event from bubbling up
+			profileDropdown.classList.toggle("show");
+		});
+
+		// Close dropdown when clicking elsewhere
+		document.addEventListener("click", function (event) {
+			if (!profileBtn.contains(event.target)) {
+				if (profileDropdown.classList.contains("show")) {
+					profileDropdown.classList.remove("show");
+				}
+			}
+		});
+	});
+
+	// Mic modal functions
+	function openMicModal() {
+		document.getElementById("mic-modal").style.display = "block";
+		// Here you would start your speech recognition
+	}
+
+	function closeMicModal() {
+		document.getElementById("mic-modal").style.display = "none";
+		// Here you would stop your speech recognition
+	}
+</script>
+{% endblock %}

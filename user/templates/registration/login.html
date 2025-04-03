@@ -1,0 +1,187 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="login-container">
+	<div class="login-card">
+		<div class="login-left">
+			<img
+				src="{% static 'user/images/savingsBox.png' %}"
+				alt="logo"
+				class="logo-image"
+			/>
+		</div>
+
+		<div class="login-right">
+			<h2 class="login-title">Sign In with Voice</h2>
+
+			{% if messages %}
+			<div class="mt-3">
+				{% for message in messages %}
+				<div class="alert alert-danger" role="alert">{{ message }}</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			<form class="form-group" method="POST">
+				{% csrf_token %}
+				<div class="input-group username-group">
+					<div class="input-icon">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle cx="12" cy="10" r="4" stroke="white" stroke-width="2" />
+							<path
+								d="M5 19C5 16.7909 6.79086 15 9 15H15C17.2091 15 19 16.7909 19 19"
+								stroke="white"
+								stroke-width="2"
+								stroke-linecap="round"
+							/>
+						</svg>
+					</div>
+					<input
+						type="text"
+						name="username"
+						id="username"
+						class="form-control"
+						placeholder="Full Name"
+						required
+					/>
+				</div>
+
+				<div class="input-group language-group">
+					<select name="language" id="language" class="form-control" required>
+						<option value="" disabled selected>Select Language</option>
+						<option value="swahili">Swahili</option>
+						<option value="zulu">Zulu</option>
+						<option value="hindi">Hindi</option>
+						<option value="english">English</option>
+					</select>
+				</div>
+
+				<button id="record" type="button" class="input-group record-button">
+					<div class="input-icon">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<rect
+								x="8"
+								y="2"
+								width="8"
+								height="14"
+								rx="4"
+								stroke="currentColor"
+								stroke-width="2"
+							/>
+							<path d="M6 9H18" stroke="currentColor" stroke-width="2" />
+							<path d="M12 16V22" stroke="currentColor" stroke-width="2" />
+							<path d="M8 22H16" stroke="currentColor" stroke-width="2" />
+						</svg>
+					</div>
+					<div>Record Voice</div>
+				</button>
+
+				<div class="form-actions">
+					<button class="btn signin-btn" type="submit">Sign In</button>
+					<span class="register-text"
+						>Don't have account?
+						<a href="{% url 'register' %}" class="register-link"
+							>Create</a
+						></span
+					>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal for Recording Voice -->
+<div id="myModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Language-specific Headers -->
+			<div id="english-header" class="modal-header">
+				<h5 class="modal-title">Read this text for Authentication</h5>
+			</div>
+			<div id="hindi-header" class="modal-header" style="display: none">
+				<h5 class="modal-title">प्रमाणीकरण के लिए इस पाठ को पढ़ें</h5>
+			</div>
+			<div id="swahili-header" class="modal-header" style="display: none">
+				<h5 class="modal-title">Soma maandishi haya kwa Uthibitisho</h5>
+			</div>
+			<div id="zulu-header" class="modal-header" style="display: none">
+				<h5 class="modal-title">Funda lo mbhalo ukuze uqinisekiswe</h5>
+			</div>
+
+			<div class="modal-body">
+				<!-- Language-specific Content -->
+				<div id="english-text" class="language-text">
+					<p>
+						Voice banking is revolutionizing financial access for those who
+						cannot read or write by allowing digital transactions through spoken
+						commands in their native languages. With AI-driven speech
+						recognition, users can send money, check balances, or apply for
+						loans simply by speaking into their phones. This ensures financial
+						inclusion for people previously excluded due to literacy barriers,
+						empowering them to manage their finances independently.
+					</p>
+				</div>
+				<div id="hindi-text" class="language-text" style="display: none">
+					<p>
+						वॉइस बैंकिंग उन लोगों के लिए वित्तीय पहुँच में क्रांति ला रही है जो
+						पढ़ या लिख नहीं सकते, क्योंकि यह उन्हें उनकी मातृभाषा में बोले गए
+						आदेशों के माध्यम से डिजिटल लेनदेन करने की अनुमति देती है।
+						एआई-संचालित वॉइस रिकग्निशन के साथ, उपयोगकर्ता केवल अपने फ़ोन में
+						बोलकर पैसे भेज सकते हैं, बैलेंस चेक कर सकते हैं, या ऋण के लिए आवेदन
+						कर सकते हैं। यह वित्तीय समावेशन सुनिश्चित करता है, जिससे वे लोग भी
+						अपनी वित्तीय गतिविधियों को स्वतंत्र रूप से प्रबंधित कर सकते हैं जो
+						पहले साक्षरता बाधाओं के कारण इससे वंचित थे।
+					</p>
+				</div>
+				<div id="swahili-text" class="language-text" style="display: none">
+					<p>
+						Benki ya sauti inabadilisha upatikanaji wa huduma za kifedha kwa
+						wale wasioweza kusoma au kuandika kwa kuwawezesha kufanya miamala ya
+						kidijitali kupitia amri za sauti katika lugha zao za asili. Kwa
+						kutumia utambuzi wa sauti unaoendeshwa na AI, watumiaji wanaweza
+						kutuma pesa, kuangalia salio, au kutuma maombi ya mikopo kwa
+						kuzungumza moja kwa moja kwenye simu zao. Hii inahakikisha
+						ujumuishaji wa kifedha kwa watu waliotengwa hapo awali kutokana na
+						vizuizi vya kusoma na kuandika, na kuwawezesha kudhibiti fedha zao
+						kwa uhuru.
+					</p>
+				</div>
+				<div id="zulu-text" class="language-text" style="display: none">
+					<p>
+						Ibhange lezwi lishintsha indlela abantu abangakwazi ukufunda noma
+						ukubhala abathola ngayo ukufinyelela ezinsizakalweni zezezimali,
+						ngokubavumela ukuthi benze ukuthengiselana kwedijithali
+						ngokusebenzisa imiyalo eyakhulunywa ngolimi lwabo lwendabuko.
+						Ngokusebenzisa ubuchwepheshe bokuhlonza amazwi obuqhutshwa yi-AI,
+						abasebenzisi bangathumela imali, bahlole ibhalansi, noma bafake
+						izicelo zemalimboleko ngokukhuluma nje kumakhalekhukhwini wabo.
+						Lokhu kuqinisekisa ukufakwa kwabantu abaningi ohlelweni lwezezimali,
+						kuqede izingqinamba ezihlobene nokungakwazi ukufunda noma ukubhala,
+						kubanike amandla okuphatha izimali zabo ngokukhululeka.
+					</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="start">Start</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add jQuery for the modal functionality -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Link to CSS and JS files -->
+<link rel="stylesheet" href="{% static 'user/css/login.css' %}" />
+<script src="{% static 'user/js/login.js' %}"></script>
+{% endblock %}
