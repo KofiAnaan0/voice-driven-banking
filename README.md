@@ -34,10 +34,12 @@ To bridge this gap, this open-source project leverages AI to enable financial tr
 - **OpenVoice** – Text-to-speech for responses in local dialects
 
 ## Project Design
-Find the detailed explanation of the project design [here](#).
+Find the detailed explanation of the project design [here](https://docs.google.com/document/d/1_Y0uesgTrwXQ5ii0xREI_6jjI8FVleSHqpvpeOraPDQ/edit?usp=sharing).
+![Prototype]().
 
 ## Product Architecture
-Find the detailed explanation of the project architecture in this [link](#).
+Find the detailed explanation of the project architecture in this [link](https://docs.google.com/document/d/1HzBupWw8HIXY974kR2wczMxS3BMq-Qbt0kgCw4cBzyw/edit?usp=sharing).
+![Architecture]().
 
 ## Project Demo
 
