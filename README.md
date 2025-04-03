@@ -35,11 +35,11 @@ To bridge this gap, this open-source project leverages AI to enable financial tr
 
 ## Project Design
 Find the detailed explanation of the project design [here](https://docs.google.com/document/d/1_Y0uesgTrwXQ5ii0xREI_6jjI8FVleSHqpvpeOraPDQ/edit?usp=sharing).
-![Prototype]().
+![Prototype](images/prototype.gif).
 
 ## Product Architecture
 Find the detailed explanation of the project architecture in this [link](https://docs.google.com/document/d/1HzBupWw8HIXY974kR2wczMxS3BMq-Qbt0kgCw4cBzyw/edit?usp=sharing).
-![Architecture]().
+![Architecture](images/ProjectArchitecture.gif).
 
 ## Project Demo
 
